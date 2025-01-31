@@ -1,0 +1,26 @@
+{%- if product.metafields.reviews.rating.value != blank -%}
+  <div
+    class="rating"
+    role="img"
+    aria-label="{{ 'products.product.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value.rating, rating_max: product.metafields.reviews.rating.value.scale_max }}"
+  >
+    <div
+      class="rating-stars"
+      style="--rating: {{ product.metafields.reviews.rating.value.rating | divided_by: product.metafields.reviews.rating.value.scale_max | times: 5 | round: 1 }};"
+    ></div>
+    <p class="rating-text caption">
+      <span aria-hidden="true">
+        {{-
+          product.metafields.reviews.rating.value.rating
+          | divided_by: product.metafields.reviews.rating.value.scale_max
+          | times: 5
+          | round: 1
+        }}
+        / 5</span
+      >
+    </p>
+    <p class="rating-count caption">
+      <span aria-hidden="true">({{ product.metafields.reviews.rating_count.value }} reviews)</span>
+    </p>
+  </div>
+{%- endif -%}

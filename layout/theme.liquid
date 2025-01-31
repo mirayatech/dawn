@@ -22,13 +22,11 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
 
     {% render 'meta-tags' %}
-    
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
@@ -267,6 +265,8 @@
       {{ 'component-price.css' | asset_url | stylesheet_tag }}
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
+
+    {{ 'component-product-slider.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
