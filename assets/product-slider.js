@@ -6,8 +6,8 @@ if (!customElements.get('product-slider')) {
         super();
         this.slider = this.querySelector('.slider-content');
         this.sliderItems = this.querySelectorAll('.product-grid li');
-        this.prevButton = this.querySelector('.slider-button--prev');
-        this.nextButton = this.querySelector('.slider-button--next');
+        this.prevButton = this.querySelector('.product-slider-button--prev');
+        this.nextButton = this.querySelector('.product-slider-button--next');
 
         if (!this.slider || !this.sliderItems.length) return;
 
