@@ -1,0 +1,82 @@
+<div class="product-slider-card">
+  <div class="product-slider-card__media">
+    {%- if product.available == false -%}
+      <span class="product-slider-card__sold-out-badge">{{ 'products.product.sold_out' | t }}</span>
+    {%- endif -%}
+    <a href="{{ product.url }}" class="product-slider-card__link">
+      {% if product.featured_media != null %}
+        <img
+          srcset="
+            {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+            {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w{%- endif -%}
+          "
+          src="{{ product.featured_media | image_url: width: 533 }}"
+          sizes="(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw"
+          alt="{{ product.featured_media.alt | escape }}"
+          loading="lazy"
+          width="{{ product.featured_media.width }}"
+          height="{{ product.featured_media.height }}"
+          class="product-slider-card__image{% if image_shape == 'rounded' %} rounded{% endif %}"
+        >
+
+        {%- if show_secondary_image and product.media[1] != null -%}
+          <img
+            srcset="
+              {%- if product.media[1].width >= 165 -%}{{ product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
+              {%- if product.media[1].width >= 360 -%}{{ product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
+              {%- if product.media[1].width >= 533 -%}{{ product.media[1] | image_url: width: 533 }} 533w{%- endif -%}
+            "
+            src="{{ product.media[1] | image_url: width: 533 }}"
+            sizes="(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw"
+            alt="{{ product.media[1].alt | escape }}"
+            loading="lazy"
+            width="{{ product.media[1].width }}"
+            height="{{ product.media[1].height }}"
+            class="product-slider-card__image-secondary{% if image_shape == 'rounded' %} rounded{% endif %}"
+          >
+        {%- endif -%}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'product-slider-card__image placeholder' }}
+      {% endif %}
+    </a>
+  </div>
+
+  <div class="product-slider-card__info">
+    {%- if show_rating -%}
+      {%- liquid
+        assign rating_decimal = product.rating | default: 0
+        assign rating_count = product.reviews_count
+        assign full_stars = rating_decimal | floor
+        assign half_stars = rating_decimal | minus: full_stars | round: 1
+        assign empty_stars = 5 | minus: rating_decimal | floor
+      -%}
+      <div class="rating" role="img" aria-label="Product rating is {{ rating_decimal }} out of 5">
+        <div class="rating-stars">
+          {%- for i in (1..full_stars) -%}
+            <span class="star-filled">★</span>
+          {%- endfor -%}
+
+          {%- if half_stars >= 0.5 -%}
+            <span class="star-half">★</span>
+          {%- endif -%}
+
+          {%- for i in (1..empty_stars) -%}
+            <span class="star-empty">★</span>
+          {%- endfor -%}
+        </div>
+        <p class="rating-count">({{ rating_count | plus: 0 }})</p>
+      </div>
+    {%- endif -%}
+
+    <div class="product-slider-card__text-content">
+      <h3 class="product-slider-card__title">
+        <a href="{{ product.url }}">{{ product.title }}</a>
+      </h3>
+
+      <div class="product-slider-card__price">
+        {% render 'price', product: product, use_variant: true, show_badges: false %}
+      </div>
+    </div>
+  </div>
+</div>
