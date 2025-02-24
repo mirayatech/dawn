@@ -1,0 +1,92 @@
+.product-slider-section {
+  margin: 50px auto;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.product-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.slider-navigation {
+  display: flex;
+  gap: 8px;
+}
+
+.slider-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e5e5e5;
+  background: white;
+  cursor: pointer;
+  padding: 0;
+}
+
+.slider-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slider-button:hover {
+  background: #f5f5f5;
+}
+
+.slider-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.slider-button--prev svg {
+  transform: rotate(90deg);
+}
+
+.slider-button--next svg {
+  transform: rotate(-90deg);
+}
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.slider-content {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.3s ease;
+  flex-wrap: nowrap;
+}
+
+.slider-content li {
+  flex: 0 0 calc((100% - 60px) / 4);
+  min-width: calc((100% - 60px) / 4);
+  max-width: calc((100% - 60px) / 4);
+}
+
+/* Hide scrollbar but keep functionality */
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.slider {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media screen and (max-width: 749px) {
+  .slider-navigation {
+    display: none;
+  }
+}
