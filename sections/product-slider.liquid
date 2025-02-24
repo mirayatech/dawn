@@ -19,8 +19,17 @@
       "min": 2,
       "max": 12,
       "step": 1,
-      "default": 4,
+      "default": 8,
       "label": "Products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
     },
     {
       "type": "select",
@@ -55,7 +64,7 @@
           "label": "Square"
         }
       ],
-      "default": "adapt",
+      "default": "square",
       "label": "Image ratio"
     },
     {
@@ -89,7 +98,7 @@
     {
       "type": "checkbox",
       "id": "show_rating",
-      "default": false,
+      "default": true,
       "label": "Show product rating"
     },
     {
@@ -102,10 +111,12 @@
   "presets": [
     {
       "name": "Product Slider",
+      "blocks": [],
       "settings": {
-        "collection": "",
-        "products_to_show": 4,
+        "products_to_show": 8,
+        "columns_desktop": 4,
         "layout": "slider",
+        "image_ratio": "square",
         "show_rating": true,
         "show_secondary_image": true
       }
@@ -114,54 +125,57 @@
 }
 {% endschema %}
 
-<div class="product-slider-section page-width{% if section.settings.layout == 'slider' %} slider-enabled{% endif %}">
-  {% if section.settings.title != blank %}
-    <h2 class="section-title">{{ section.settings.title }}</h2>
-  {% endif %}
+{{ 'section-product-slider.css' | asset_url | stylesheet_tag }}
+{{ 'product-slider-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-slider.js' | asset_url }}" defer></script>
 
+<div class="product-slider-section page-width{% if section.settings.layout == 'slider' %} slider-enabled{% endif %}">
   {%- if section.settings.collection != blank -%}
-    <slider-component class="slider">
+    <product-slider class="slider">
+      <div class="product-slider-header">
+        {% if section.settings.title != blank %}
+          <h2 class="section-title">{{ section.settings.title }}</h2>
+        {% endif %}
+
+        {%- if section.settings.layout == 'slider' -%}
+          <div class="slider-navigation">
+            <button
+              type="button"
+              class="slider-button slider-button--prev"
+              name="previous"
+              aria-label="{{ 'general.slider.previous_slide' | t }}"
+            >
+              {% render 'icon-caret' %}
+            </button>
+            <button
+              type="button"
+              class="slider-button slider-button--next"
+              name="next"
+              aria-label="{{ 'general.slider.next_slide' | t }}"
+            >
+              {% render 'icon-caret' %}
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
       <ul
         class="product-grid grid grid--2-col-tablet-down grid--4-col-desktop slider-content"
         role="list"
       >
         {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
-          <li class="grid__item">
-            {% render 'card-product',
-              card_product: product,
+          <li>
+            {% render 'product-slider-card',
+              product: product,
               media_aspect_ratio: section.settings.image_ratio,
               image_shape: section.settings.image_shape,
               show_secondary_image: section.settings.show_secondary_image,
               show_vendor: section.settings.show_vendor,
               show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles,
-              section_id: section.id,
               quick_add: section.settings.quick_add
             %}
           </li>
         {%- endfor -%}
       </ul>
-
-      {%- if section.settings.layout == 'slider' -%}
-        <div class="slider-buttons no-js-hidden">
-          <button
-            type="button"
-            class="slider-button slider-button--prev"
-            name="previous"
-            {% comment %} aria-label="{{ 'general.slider.previous_slide' | t }}" {% endcomment %}
-          >
-            {% render 'icon-caret' %}
-          </button>
-          <button
-            type="button"
-            class="slider-button slider-button--next"
-            name="next"
-            {% comment %} aria-label="{{ 'general.slider.next_slide' | t }}" {% endcomment %}
-          >
-            {% render 'icon-caret' %}
-          </button>
-        </div>
-      {%- endif -%}
-    </slider-component>
+    </product-slider>
   {%- endif -%}
 </div>
