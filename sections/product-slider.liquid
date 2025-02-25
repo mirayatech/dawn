@@ -106,6 +106,26 @@
       "id": "quick_add",
       "default": false,
       "label": "Enable quick add"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
     }
   ],
   "presets": [
@@ -118,7 +138,11 @@
         "layout": "slider",
         "image_ratio": "square",
         "show_rating": true,
-        "show_secondary_image": true
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "quick_add": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   ]
@@ -127,9 +151,24 @@
 
 {{ 'section-product-slider.css' | asset_url | stylesheet_tag }}
 {{ 'product-slider-card.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
 <script src="{{ 'product-slider.js' | asset_url }}" defer></script>
 
-<div class="product-slider-section page-width{% if section.settings.layout == 'slider' %} slider-enabled{% endif %}">
+<div class="product-slider-section page-width section-{{ section.id }}-padding{% if section.settings.layout == 'slider' %} slider-enabled{% endif %}">
   {%- if section.settings.collection != blank -%}
     <product-slider class="slider">
       <div class="product-slider-header">
