@@ -173,10 +173,11 @@
   color: rgb(var(--color-sale-price, 220, 38, 38));
 }
 
-.product-slider-card__price .price__compare {
-  color: rgba(var(--color-foreground), 0.6);
+.product-slider-card__price .price--on-sale .price-item--regular {
+  color: rgba(var(--color-foreground), 0.4);
   text-decoration: line-through;
-  font-size: 0.9em;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
 .product-slider-card__quick-add {

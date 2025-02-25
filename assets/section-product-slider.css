@@ -94,4 +94,36 @@
     text-align: center;
     margin: 0 auto;
   }
+
+  .slider {
+    position: relative;
+    width: 100%;
+  }
+
+  .slider-content {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 20px;
+    transition: none;
+  }
+
+  .slider-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .slider-content {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .slider-content li {
+    flex: 0 0 calc((100% - 20px) / 2);
+    min-width: calc((100% - 20px) / 2);
+    max-width: calc((100% - 20px) / 2);
+    scroll-snap-align: start;
+  }
 }
