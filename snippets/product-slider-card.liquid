@@ -1,8 +1,5 @@
 <div class="product-slider-card">
   <div class="product-slider-card__media">
-    {%- if product.available == false -%}
-      <span class="product-slider-card__sold-out-badge">{{ 'products.product.sold_out' | t }}</span>
-    {%- endif -%}
     <a href="{{ product.url }}" class="product-slider-card__link">
       {% if product.featured_media != null %}
         <img
@@ -43,6 +40,14 @@
   </div>
 
   <div class="product-slider-card__info">
+    <div class="card__badge {{ settings.badge_position }}">
+      {%- if product.available == false -%}
+        <span class="badge badge--bottom-right color-{{ settings.sold_out_badge_color_scheme }}">
+          {{- 'products.product.sold_out' | t -}}
+        </span>
+      {%- endif -%}
+    </div>
+
     {%- if show_rating -%}
       {%- liquid
         assign rating_decimal = product.rating | default: 0
@@ -79,7 +84,7 @@
           product: product,
           show_compare_at_price: true,
           use_variant: false,
-          show_badges: true,
+          show_badges: false,
           from_price_html: true
         %}
       </div>
